@@ -37,26 +37,33 @@ public class InputPanel extends JPanel {
 		condition.setBounds(260, 0, 80, 30);
 		compValue = new JTextField();
 		compValue.setBounds(410, 0, 200, 30);
-		addOne = new JButton("+");
-		addOne.setBounds(670, 0, 50, 30);
-		addOne.addActionListener(new ActionListener() {
-			private int panel_id = panel.panel_id;
+		compValue.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("This Location : " + panel.panel_id);
+			}
+			
+		});
+		addOne = new JButton("+");
+		addOne.setBounds(670, 0, 50, 30);
+		addOne.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
 				// 插入到第I个位置，I = panel_id
+				System.out.println("You pressed(add) : " + panel.panel_id);
 				InputPanel showPanel = new InputPanel()
-						.getPanelImpl(panel_id + 1);
-				if (panel_id < AdvanceFrame.conditionList.size()) {
+						.getPanelImpl(panel.panel_id + 1);
+				if (panel.panel_id < AdvanceFrame.conditionList.size()) {
 					showPanel.setBounds(AdvanceFrame.conditionList
-							.get(panel_id).getX(), AdvanceFrame.conditionList
-							.get(panel_id).getY(), AdvanceFrame.conditionList
-							.get(panel_id).getWidth(),
-							AdvanceFrame.conditionList.get(panel_id)
+							.get(panel.panel_id).getX(), AdvanceFrame.conditionList
+							.get(panel.panel_id).getY(), AdvanceFrame.conditionList
+							.get(panel.panel_id).getWidth(),
+							AdvanceFrame.conditionList.get(panel.panel_id)
 									.getHeight());
 					// 调整位置
-					AdvanceFrame.conditionList.add(null);
-					for (int i = AdvanceFrame.conditionList.size() - 1; i > panel_id; i--) {
+					AdvanceFrame.conditionList.add(new InputPanel());
+					for (int i = AdvanceFrame.conditionList.size() - 1; i > panel.panel_id; i--) {
 						AdvanceFrame.conditionList.get(i - 1)
 								.setBounds(
 										AdvanceFrame.conditionList.get(i - 1)
@@ -71,19 +78,19 @@ public class InputPanel extends JPanel {
 								AdvanceFrame.conditionList.get(i - 1));
 						AdvanceFrame.conditionList.get(i).panel_id++;
 					}
-					AdvanceFrame.conditionList.set(panel_id, showPanel);
+					AdvanceFrame.conditionList.set(panel.panel_id, showPanel);
 				} else {
-					System.out.println("get    " + panel_id);
+					System.out.println("get    " + panel.panel_id);
 					showPanel
 							.setBounds(
 									AdvanceFrame.conditionList
-											.get(panel_id - 1).getX(),
+											.get(panel.panel_id - 1).getX(),
 									AdvanceFrame.conditionList
-											.get(panel_id - 1).getY() + 31,
+											.get(panel.panel_id - 1).getY() + 31,
 									AdvanceFrame.conditionList
-											.get(panel_id - 1).getWidth(),
+											.get(panel.panel_id - 1).getWidth(),
 									AdvanceFrame.conditionList
-											.get(panel_id - 1).getHeight());
+											.get(panel.panel_id - 1).getHeight());
 					AdvanceFrame.conditionList.add(showPanel);
 				}
 				for (InputPanel p : AdvanceFrame.conditionList)
@@ -97,18 +104,16 @@ public class InputPanel extends JPanel {
 		subOne = new JButton("-");
 		subOne.setBounds(730, 0, 50, 30);
 		subOne.addActionListener(new ActionListener() {
-			private int panel_id = panel.panel_id;
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// 移除第I-1个位置，I = panel_id
+				System.out.println("You pressed(del) : " + panel.panel_id);
 				InputPanel showPanel = AdvanceFrame.conditionList
-						.get(panel_id - 1);
-				if (panel_id < AdvanceFrame.conditionList.size()) {
+						.get(panel.panel_id - 1);
+				if (panel.panel_id < AdvanceFrame.conditionList.size()) {
 					// 调整位置
-					for (int i = panel_id; i < AdvanceFrame.conditionList
+					for (int i = panel.panel_id; i < AdvanceFrame.conditionList
 							.size(); i++) {
-						AdvanceFrame.conditionList.get(i).panel_id--;
 						AdvanceFrame.conditionList.get(i).setBounds(
 								AdvanceFrame.conditionList.get(i).getX(),
 								AdvanceFrame.conditionList.get(i).getY() - 31,
@@ -116,6 +121,7 @@ public class InputPanel extends JPanel {
 								AdvanceFrame.conditionList.get(i).getHeight());
 						AdvanceFrame.conditionList.set(i - 1,
 								AdvanceFrame.conditionList.get(i));
+						AdvanceFrame.conditionList.get(i - 1).panel_id--;
 					}
 					AdvanceFrame.conditionList
 							.remove(AdvanceFrame.conditionList.size() - 1);

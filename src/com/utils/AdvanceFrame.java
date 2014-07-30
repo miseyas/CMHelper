@@ -2,8 +2,6 @@ package com.utils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
